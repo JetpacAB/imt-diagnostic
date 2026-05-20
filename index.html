@@ -7,51 +7,54 @@
     <style>
         :root {
             --bg: #ffffff;
-            --fg: #000000;
-            --border: #000000;
+            --fg: #151515;
+            --border: #151515;
+            --border-muted: #e5e5e5;
             --muted: #666666;
-            --light-bg: #f9f9f9;
+            --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, monospace;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; padding: 40px 20px; }
+        body { background: var(--bg); color: var(--fg); font-family: var(--font-serif); -webkit-font-smoothing: antialiased; padding: 60px 20px; line-height: 1.6; }
         
-        .wrapper { max-width: 1200px; margin: 0 auto; }
+        .wrapper { max-width: 1050px; margin: 0 auto; }
         
-        header { border-bottom: 3px solid var(--border); padding-bottom: 20px; margin-bottom: 40px; }
-        .brand { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
-        h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em; text-transform: uppercase; line-height: 1.1; }
+        header { border-bottom: 2px solid var(--border); padding-bottom: 24px; margin-bottom: 48px; }
+        .brand { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--fg); margin-bottom: 12px; }
+        h1 { font-family: var(--font-sans); font-size: 2.8rem; font-weight: 800; letter-spacing: -0.04em; text-transform: uppercase; line-height: 1.05; }
         
-        .layout { display: grid; grid-template-columns: 1fr; gap: 40px; }
-        @media (min-width: 900px) { .layout { grid-template-columns: 1.3fr 0.7fr; } }
+        .layout { display: grid; grid-template-columns: 1fr; gap: 64px; }
+        @media (min-width: 950px) { .layout { grid-template-columns: 1.25fr 0.75fr; } }
         
-        .pane-inputs { display: flex; flex-direction: column; gap: 32px; }
+        .pane-inputs { display: flex; flex-direction: column; gap: 48px; }
         
-        .dimension-group { border-top: 2px solid var(--border); padding-top: 20px; }
-        .dimension-title-bar { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
-        .dimension-title { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; }
-        .dimension-roll-score { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; background: var(--fg); color: var(--bg); padding: 2px 6px; }
+        .dimension-group { padding-bottom: 16px; }
+        .dimension-title-bar { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1.5px solid var(--border); padding-bottom: 8px; margin-bottom: 24px; }
+        .dimension-title { font-family: var(--font-sans); font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; }
+        .dimension-roll-score { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; background: var(--fg); color: var(--bg); padding: 1px 6px; }
         
-        .question-card { background: var(--light-bg); border: 1px solid #e0e0e0; padding: 16px; margin-bottom: 12px; }
-        .question-text { font-size: 0.95rem; font-weight: 600; line-height: 1.4; margin-bottom: 12px; }
+        .question-card { border-bottom: 1px dashed var(--border-muted); padding: 20px 0; }
+        .question-card:last-of-type { border-bottom: none; }
+        .question-text { font-size: 1.05rem; color: var(--fg); margin-bottom: 16px; font-style: normal; }
         
-        .selector-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
-        .btn-score { background: var(--bg); border: 1px solid var(--border); color: var(--fg); font-family: var(--font-mono); font-size: 0.85rem; padding: 8px 4px; cursor: pointer; font-weight: 600; text-align: center; }
-        .btn-score:hover { background: var(--fg); color: var(--bg); }
+        /* Substack-aligned minimalist square selector segments */
+        .selector-row { display: flex; gap: 6px; max-width: 320px; }
+        .btn-score { background: var(--bg); border: 1px solid #cccccc; color: var(--muted); font-family: var(--font-mono); font-size: 0.8rem; width: 34px; height: 34px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; transition: all 0.1s ease; }
+        .btn-score:hover { border-color: var(--fg); color: var(--fg); }
         .btn-score.active { background: var(--fg); color: var(--bg); border-color: var(--fg); }
         
-        .pane-visual { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 24px; height: fit-content; }
-        .chart-box { border: 1px solid var(--border); padding: 20px; display: flex; justify-content: center; align-items: center; background: var(--bg); }
+        .pane-visual { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 32px; height: fit-content; }
+        .chart-box { padding: 10px; display: flex; justify-content: center; align-items: center; background: var(--bg); }
         canvas { max-width: 100%; height: auto; display: block; }
         
-        .summary-box { border: 3px solid var(--border); padding: 24px; }
-        .metric-label { font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 4px; }
-        .metric-value { font-size: 4rem; font-weight: 900; letter-spacing: -0.05em; line-height: 1; }
+        .summary-box { border-top: 2px solid var(--border); padding-top: 24px; }
+        .metric-label { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+        .metric-value { font-family: var(--font-sans); font-size: 4.5rem; font-weight: 900; letter-spacing: -0.05em; line-height: 1; margin-bottom: 16px; }
         
-        .bottleneck-box { margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border); font-size: 0.9rem; line-height: 1.4; }
-        .bottleneck-highlight { font-weight: 700; text-transform: uppercase; }
+        .bottleneck-box { font-size: 0.95rem; color: #333333; line-height: 1.5; }
+        .bottleneck-highlight { font-family: var(--font-sans); font-weight: 700; text-transform: uppercase; color: var(--fg); letter-spacing: -0.01em; }
     </style>
 </head>
 <body>
@@ -64,8 +67,7 @@
         
         <div class="layout">
             <section class="pane-inputs" id="questionsContainer">
-                <!-- Data dynamically injected via JavaScript -->
-            </section>
+                </section>
             
             <aside class="pane-visual">
                 <div class="chart-box">
@@ -83,7 +85,6 @@
     </div>
 
     <script>
-        // Cleaned structure with all numeric prefixes removed from metadata and text
         const matrixData = [
             {
                 id: 'resp',
@@ -181,7 +182,7 @@
                     
                     const textDiv = document.createElement('div');
                     textDiv.className = 'question-text';
-                    textDiv.innerText = qText; // Direct mapping without any index concatenation
+                    textDiv.innerText = qText;
                     qCard.appendChild(textDiv);
 
                     const selectRow = document.createElement('div');
@@ -217,8 +218,8 @@
             ctx.clearRect(0, 0, 400, 400);
             const cx = 200, cy = 200, maxRadius = 140;
             
-            // 1. Web levels
-            ctx.strokeStyle = '#e0e0e0';
+            // Web levels grid lines
+            ctx.strokeStyle = '#eaeaea';
             ctx.lineWidth = 1;
             for (let level = 1; level <= 5; level++) {
                 ctx.beginPath();
@@ -231,10 +232,10 @@
                 ctx.stroke();
             }
 
-            // 2. Axes and Labels
-            ctx.strokeStyle = '#000000';
-            ctx.fillStyle = '#000000';
-            ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            // Axes and minimal crisp labels
+            ctx.strokeStyle = '#151515';
+            ctx.fillStyle = '#151515';
+            ctx.font = 'bold 9px ui-monospace, SFMono-Regular, Menlo, sans-serif';
             ctx.textAlign = 'center';
             
             matrixData.forEach((dim, i) => {
@@ -244,18 +245,16 @@
                 ctx.lineTo(cx + maxRadius * Math.cos(angle), cy + maxRadius * Math.sin(angle));
                 ctx.stroke();
                 
-                const textDist = maxRadius + 20;
+                const textDist = maxRadius + 18;
                 let tx = cx + textDist * Math.cos(angle);
                 let ty = cy + textDist * Math.sin(angle);
-                if (i === 0) ty -= 5;
+                if (i === 0) ty -= 6;
                 if (i === 3) ty += 12;
                 
-                // Keep label split or clean for visual chart geometry spacing
                 const shortLabel = dim.title.toUpperCase();
                 ctx.fillText(shortLabel, tx, ty);
             });
 
-            // 3. Score Calculations
             let totalIndexSum = 0;
             let lowestScore = 6.0;
             let primaryBottleneck = '';
@@ -281,19 +280,19 @@
                 });
             });
 
-            // 4. Draw polygon
+            // Draw crisp geometry polygon profile
             ctx.beginPath();
             currentPolygonPoints.forEach((pt, i) => {
                 if (i === 0) ctx.moveTo(pt.x, pt.y);
                 else ctx.lineTo(pt.x, pt.y);
             });
             ctx.closePath();
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
+            ctx.fillStyle = 'rgba(21, 21, 21, 0.08)';
             ctx.fill();
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 1.5;
             ctx.stroke();
 
-            // 5. Output text blocks
+            // Total summary logic output updates
             const globalIndex = (totalIndexSum / 6).toFixed(1);
             document.getElementById('indexValue').innerText = globalIndex;
             
