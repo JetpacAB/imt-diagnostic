@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JETPAC // IMT DIAGNOSTIC</title>
+    <title>JETPAC // IMT DIAGNOSTIC MATRIX</title>
     <style>
         :root {
             --bg: #ffffff;
             --fg: #000000;
             --border: #000000;
             --muted: #666666;
+            --light-bg: #f9f9f9;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, monospace;
         }
@@ -17,27 +18,33 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; padding: 40px 20px; }
         
-        .wrapper { max-width: 1100px; margin: 0 auto; }
+        .wrapper { max-width: 1200px; margin: 0 auto; }
         
         header { border-bottom: 3px solid var(--border); padding-bottom: 20px; margin-bottom: 40px; }
         .brand { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
         h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em; text-transform: uppercase; line-height: 1.1; }
         
         .layout { display: grid; grid-template-columns: 1fr; gap: 40px; }
-        @media (min-width: 850px) { .layout { grid-template-columns: 1.2fr 0.8fr; } }
+        @media (min-width: 900px) { .layout { grid-template-columns: 1.3fr 0.7fr; } }
         
-        .pane-inputs { display: flex; flex-direction: column; gap: 24px; }
-        .dimension-card { border: 1px solid var(--border); padding: 20px; }
+        .pane-inputs { display: flex; flex-direction: column; gap: 32px; }
         
-        .dim-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
-        .dim-title { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; }
-        .dim-score { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; background: var(--fg); color: var(--bg); padding: 2px 6px; }
+        .dimension-group { border-top: 2px solid var(--border); padding-top: 20px; }
+        .dimension-title-bar { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+        .dimension-title { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; }
+        .dimension-roll-score { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; background: var(--fg); color: var(--bg); padding: 2px 6px; }
         
-        input[type="range"] { -webkit-appearance: none; width: 100%; background: #e0e0e0; height: 2px; outline: none; margin: 15px 0; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--fg); cursor: pointer; border-radius: 0; border: none; }
+        .question-card { background: var(--light-bg); border: 1px solid #e0e0e0; padding: 16px; margin-bottom: 12px; }
+        .question-text { font-size: 0.95rem; font-weight: 600; line-height: 1.4; margin-bottom: 12px; }
+        
+        /* Metric selector buttons */
+        .selector-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+        .btn-score { background: var(--bg); border: 1px solid var(--border); color: var(--fg); font-family: var(--font-mono); font-size: 0.85rem; padding: 8px 4px; cursor: pointer; font-weight: 600; text-align: center; }
+        .btn-score:hover { background: var(--fg); color: var(--bg); }
+        .btn-score.active { background: var(--fg); color: var(--bg); border-color: var(--fg); }
         
         .pane-visual { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 24px; height: fit-content; }
-        .chart-box { border: 1px solid var(--border); padding: 30px; display: flex; justify-content: center; align-items: center; background: var(--bg); }
+        .chart-box { border: 1px solid var(--border); padding: 20px; display: flex; justify-content: center; align-items: center; background: var(--bg); }
         canvas { max-width: 100%; height: auto; display: block; }
         
         .summary-box { border: 3px solid var(--border); padding: 24px; }
@@ -57,33 +64,12 @@
         </header>
         
         <div class="layout">
-            <section class="pane-inputs">
-                <div class="dimension-card">
-                    <div class="dim-header"><span class="dim-title">1. Responsibility</span><span class="dim-score" id="score-resp">3.0</span></div>
-                    <input type="range" id="resp" min="1" max="5" step="0.5" value="3.0">
-                </div>
-                <div class="dimension-card">
-                    <div class="dim-header"><span class="dim-title">2. Information Embedding</span><span class="dim-score" id="score-info">3.0</span></div>
-                    <input type="range" id="info" min="1" max="5" step="0.5" value="3.0">
-                </div>
-                <div class="dimension-card">
-                    <div class="dim-header"><span class="dim-title">3. Incentives</span><span class="dim-score" id="score-inc">3.0</span></div>
-                    <input type="range" id="inc" min="1" max="5" step="0.5" value="3.0">
-                </div>
-                <div class="dimension-card">
-                    <div class="dim-header"><span class="dim-title">4. Adaptation</span><span class="dim-score" id="score-adapt">3.0</span></div>
-                    <input type="range" id="adapt" min="1" max="5" step="0.5" value="3.0">
-                </div>
-                <div class="dimension-card">
-                    <div class="dim-header"><span class="dim-title">5. Competence</span><span class="dim-score" id="score-comp">3.0</span></div>
-                    <input type="range" id="comp" min="1" max="5" step="0.5" value="3.0">
-                </div>
-                <div class="dimension-card">
-                    <div class="dim-header"><span class="dim-title">6. Temporal Alignment</span><span class="dim-score" id="score-temp">3.0</span></div>
-                    <input type="range" id="temp" min="1" max="5" step="0.5" value="3.0">
-                </div>
+            <!-- Left Pane: 30 Questions divided by the 6 IMT Dimensions -->
+            <section class="pane-inputs" id="questionsContainer">
+                <!-- Javascript will inject the dimensions and questions here -->
             </section>
             
+            <!-- Right Pane: Live Tracking Chart & Dynamic Dashboard Values -->
             <aside class="pane-visual">
                 <div class="chart-box">
                     <canvas id="imtRadar" width="400" height="400"></canvas>
@@ -92,7 +78,7 @@
                     <div class="metric-label">Systemic Maturity Index</div>
                     <div class="metric-value" id="indexValue">3.0</div>
                     <div class="bottleneck-box" id="bottleneckOutput">
-                        Adjust sliders to evaluate the organizational landscape.
+                        Evaluating systems data...
                     </div>
                 </div>
             </aside>
@@ -100,23 +86,147 @@
     </div>
 
     <script>
-        const canvas = document.getElementById('imtRadar');
-        const ctx = canvas.getContext('2d');
-        
-        const dimensions = [
-            { id: 'resp', label: 'Responsibility' },
-            { id: 'info', label: 'Information' },
-            { id: 'inc', label: 'Incentives' },
-            { id: 'adapt', label: 'Adaptation' },
-            { id: 'comp', label: 'Competence' },
-            { id: 'temp', label: 'Temporal' }
+        // Complete 30-Question Diagnostic Matrix Structure
+        const matrixData = [
+            {
+                id: 'resp',
+                title: '1. Responsibility',
+                questions: [
+                    "Are legal, statutory, and operational duties clearly delineated across all stakeholders without overlapping ambiguity?",
+                    "Does individuals or teams actively take functional ownership of systemic risks rather than treating them as a pure checklist exercise?",
+                    "Are explicit internal enforcement mechanisms present to correct non-compliance or trace accountability breakdowns immediately?",
+                    "How clearly are individual organizational boundaries defined when executing collaborative joint ventures or multi-party projects?",
+                    "Is there clear legal and structural protection for personnel who escalate complex or critical safety concerns?"
+                ]
+            },
+            {
+                id: 'info',
+                title: '2. Information Embedding',
+                questions: [
+                    "Is critical documentation managed via an immutable, transparently structured digital 'golden thread'?",
+                    "Can active personnel locate, query, and verify safety-critical design data asynchronously in less than 5 minutes?",
+                    "Are all asset design adjustments, variations, and gateway approvals logged with clear technical impact footprints?",
+                    "Is cross-functional operational insight shared automatically between detached design teams and onsite delivery personnel?",
+                    "How robust are the preservation protocols against data degradation or missing context over multi-decade lifecycles?"
+                ]
+            },
+            {
+                id: 'inc',
+                title: '3. Incentives',
+                questions: [
+                    "Do commercial procurement strategies actively reward systemic safety performance over bottom-dollar pricing?",
+                    "Are corporate key performance indicators (KPIs) explicitly tied to risk-reduction outcomes instead of production speed?",
+                    "Are safety enforcement policies balanced reasonably between punitive measures and transparent peer learning metrics?",
+                    "Does the financial architecture disincentivize corner-cutting or cost-shifting behaviors across supply chains?",
+                    "Are commercial leaders financially or professionally accountable for the long-term operational resilience of assets?"
+                ]
+            },
+            {
+                id: 'adapt',
+                title: '4. Adaptation',
+                questions: [
+                    "Are safety incident root causes, near-miss insights, and audit metrics systematically written into updated corporate standards?",
+                    "How fast does the organization update its operational policies following systemic industry updates or regulatory shifts?",
+                    "Are critical systems routinely stress-tested using hypothetical failure modes and rigorous internal red-teaming?",
+                    "Is there low reporting friction, allowing frontline staff to log structural, technical, or process errors without social stigma?",
+                    "Are corrections systematically tracked to verify that changed processes actually mitigated the targeted failure point?"
+                ]
+            },
+            {
+                id: 'comp',
+                title: '5. Competence',
+                questions: [
+                    "Is there an objective, live capability matrix mapping individual technical skills against assigned project complexity?",
+                    "Do key decision-makers demonstrate thorough baseline understanding of regulatory codes (e.g., BSA 2022, CDM 2015)?",
+                    "Does the organization run predictive training loops to target systemic skills shortages before project execution?",
+                    "Are professional credentials independently and routinely verified through transparent peer review or third-party audits?",
+                    "Is professional development focused on navigating non-routine systemic failures rather than passive compliance checks?"
+                ]
+            },
+            {
+                id: 'temp',
+                title: '6. Temporal Alignment',
+                questions: [
+                    "Are design parameters mapped against long-term asset lifecycles rather than short-term quarterly financial constraints?",
+                    "Does the organization calculate and manage future risk liabilities that remain latent for years following project delivery?",
+                    "Are technical handovers cleanly executed to preserve design assumptions across changing corporate boundaries?",
+                    "Is there an active, long-horizon review cycle to systematically address gradual technical obsolescence?",
+                    "Are regulatory shelf-life requirements projected, budgeted, and designed for decades in advance?"
+                ]
+            }
         ];
 
-        function render() {
+        // State tracking data store (Default score 3.0 for all 30 questions)
+        const userScores = {};
+        matrixData.forEach(dim => {
+            userScores[dim.id] = Array(dim.questions.length).fill(3.0);
+        });
+
+        const container = document.getElementById('questionsContainer');
+        const canvas = document.getElementById('imtRadar');
+        const ctx = canvas.getContext('2d');
+
+        // Dynamically build the DOM structure for all 30 questions
+        function initDOM() {
+            matrixData.forEach(dim => {
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'dimension-group';
+                
+                const headerBar = document.createElement('div');
+                headerBar.className = 'dimension-title-bar';
+                headerBar.innerHTML = `
+                    <span class="dimension-title">${dim.title}</span>
+                    <span class="dimension-roll-score" id="roll-${dim.id}">3.0</span>
+                `;
+                groupDiv.appendChild(headerBar);
+
+                dim.questions.forEach((qText, qIdx) => {
+                    const qCard = document.createElement('div');
+                    qCard.className = 'question-card';
+                    
+                    const textDiv = document.createElement('div');
+                    textDiv.className = 'question-text';
+                    textDiv.innerText = `${dim.title.split('.')[0]}.${qIdx + 1} ${qText}`;
+                    qCard.appendChild(textDiv);
+
+                    const selectRow = document.createElement('div');
+                    selectRow.className = 'selector-row';
+
+                    for (let s = 1; s <= 5; s++) {
+                        const btn = document.createElement('button');
+                        btn.className = `btn-score score-btn-${dim.id}-${qIdx}`;
+                        btn.type = 'button';
+                        btn.innerText = s.toFixed(0);
+                        if (s === 3) btn.classList.add('active'); // set baseline state visual
+                        
+                        btn.addEventListener('click', () => {
+                            // Update dynamic state arrays
+                            userScores[dim.id][qIdx] = parseFloat(s);
+                            
+                            // Adjust UI button active classes
+                            document.querySelectorAll(`.score-btn-${dim.id}-${qIdx}`).forEach(b => b.classList.remove('active'));
+                            btn.classList.add('active');
+                            
+                            // Re-calculate and draw values
+                            calculateAndRender();
+                        });
+                        selectRow.appendChild(btn);
+                    }
+                    
+                    qCard.appendChild(selectRow);
+                    groupDiv.appendChild(qCard);
+                });
+
+                container.appendChild(groupDiv);
+            });
+        }
+
+        // Analytical Engine & Radar Rendering Loop
+        function calculateAndRender() {
             ctx.clearRect(0, 0, 400, 400);
             const cx = 200, cy = 200, maxRadius = 140;
             
-            // 1. Draw web grid lines (Levels 1 to 5)
+            // 1. Draw web level lines (1 to 5)
             ctx.strokeStyle = '#e0e0e0';
             ctx.lineWidth = 1;
             for (let level = 1; level <= 5; level++) {
@@ -130,58 +240,61 @@
                 ctx.stroke();
             }
 
-            // 2. Draw axis lines and typography labels
+            // 2. Draw dimension axis grid lines and typography
             ctx.strokeStyle = '#000000';
             ctx.fillStyle = '#000000';
             ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
             ctx.textAlign = 'center';
             
-            dimensions.forEach((dim, i) => {
+            matrixData.forEach((dim, i) => {
                 const angle = (i * Math.PI / 3) - Math.PI / 2;
-                
-                // Axis line
                 ctx.beginPath();
                 ctx.moveTo(cx, cy);
                 ctx.lineTo(cx + maxRadius * Math.cos(angle), cy + maxRadius * Math.sin(angle));
                 ctx.stroke();
                 
-                // Text positioning offset adjustments
                 const textDist = maxRadius + 20;
                 let tx = cx + textDist * Math.cos(angle);
                 let ty = cy + textDist * Math.sin(angle);
                 if (i === 0) ty -= 5;
                 if (i === 3) ty += 12;
                 
-                ctx.fillText(dim.label.toUpperCase(), tx, ty);
+                const shortLabel = dim.title.split(' ')[1].toUpperCase();
+                ctx.fillText(shortLabel, tx, ty);
             });
 
-            // 3. Read input scores, calculate index, identify primary bottleneck
-            let totalScore = 0;
-            let lowestScore = 6;
-            let lowestDim = '';
-            const currentPoints = [];
+            // 3. Compute rolling averages for each dimension axis block
+            let totalIndexSum = 0;
+            let lowestScore = 6.0;
+            let primaryBottleneck = '';
+            const currentPolygonPoints = [];
 
-            dimensions.forEach((dim, i) => {
-                const val = parseFloat(document.getElementById(dim.id).value);
-                document.getElementById(`score-${dim.id}`).innerText = val.toFixed(1);
+            matrixData.forEach((dim, i) => {
+                // Arithmetic mean of the 5 sub-questions
+                const qArray = userScores[dim.id];
+                const dimAverage = qArray.reduce((a, b) => a + b, 0) / qArray.length;
                 
-                totalScore += val;
-                if (val < lowestScore) {
-                    lowestScore = val;
-                    lowestDim = dim.label;
+                // Update specific inline component badge
+                document.getElementById(`roll-${dim.id}`).innerText = dimAverage.toFixed(1);
+                
+                totalIndexSum += dimAverage;
+                if (dimAverage < lowestScore) {
+                    lowestScore = dimAverage;
+                    primaryBottleneck = dim.title.substring(3);
                 }
 
+                // Chart geometry translation
                 const angle = (i * Math.PI / 3) - Math.PI / 2;
-                const currentRadius = (maxRadius / 5) * val;
-                currentPoints.push({
-                    x: cx + currentRadius * Math.cos(angle),
-                    y: cy + currentRadius * Math.sin(angle)
+                const activeRadius = (maxRadius / 5) * dimAverage;
+                currentPolygonPoints.push({
+                    x: cx + activeRadius * Math.cos(angle),
+                    y: cy + activeRadius * Math.sin(angle)
                 });
             });
 
-            // 4. Plot profile polygon
+            // 4. Plot profile canvas polygon overlay
             ctx.beginPath();
-            currentPoints.forEach((pt, i) => {
+            currentPolygonPoints.forEach((pt, i) => {
                 if (i === 0) ctx.moveTo(pt.x, pt.y);
                 else ctx.lineTo(pt.x, pt.y);
             });
@@ -191,19 +304,17 @@
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // 5. Update summary elements
-            const finalIndex = (totalScore / 6).toFixed(1);
-            document.getElementById('indexValue').innerText = finalIndex;
+            // 5. Dynamic Summary Block Output Upgrades
+            const globalIndex = (totalIndexSum / 6).toFixed(1);
+            document.getElementById('indexValue').innerText = globalIndex;
             
             document.getElementById('bottleneckOutput').innerHTML = 
-                `Primary systemic bottleneck identified within <span class="bottleneck-highlight">${lowestDim}</span> (${lowestScore.toFixed(1)}). Structural interventions should prioritize this axis to unlock maturity scaling.`;
+                `Primary systemic bottleneck identified within <span class="bottleneck-highlight">${primaryBottleneck}</span> (${lowestScore.toFixed(1)}). Structural interventions should prioritize this axis to unlock maturity scaling.`;
         }
 
-        dimensions.forEach(dim => {
-            document.getElementById(dim.id).addEventListener('input', render);
-        });
-
-        render();
+        // Initialization runtime executions
+        initDOM();
+        calculateAndRender();
     </script>
 </body>
 </html>
