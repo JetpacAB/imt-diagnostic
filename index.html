@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jetpac_AB</title>
+    <title>JETPAC // IMT DIAGNOSTIC MATRIX</title>
     <style>
         :root {
             --bg: #ffffff;
@@ -37,7 +37,6 @@
         .question-card { background: var(--light-bg); border: 1px solid #e0e0e0; padding: 16px; margin-bottom: 12px; }
         .question-text { font-size: 0.95rem; font-weight: 600; line-height: 1.4; margin-bottom: 12px; }
         
-        /* Metric selector buttons */
         .selector-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
         .btn-score { background: var(--bg); border: 1px solid var(--border); color: var(--fg); font-family: var(--font-mono); font-size: 0.85rem; padding: 8px 4px; cursor: pointer; font-weight: 600; text-align: center; }
         .btn-score:hover { background: var(--fg); color: var(--bg); }
@@ -59,17 +58,15 @@
 
     <div class="wrapper">
         <header>
-            <div class="brand">Jetpac_AB</div>
+            <div class="brand">JETPAC // SYSTEMS & GOVERNANCE RESEARCH</div>
             <h1>Institutional Maturity Index</h1>
         </header>
         
         <div class="layout">
-            <!-- Left Pane: 30 Questions divided by the 6 IMT Dimensions -->
             <section class="pane-inputs" id="questionsContainer">
-                <!-- Javascript will inject the dimensions and questions here -->
+                <!-- Data dynamically injected via JavaScript -->
             </section>
             
-            <!-- Right Pane: Live Tracking Chart & Dynamic Dashboard Values -->
             <aside class="pane-visual">
                 <div class="chart-box">
                     <canvas id="imtRadar" width="400" height="400"></canvas>
@@ -86,11 +83,11 @@
     </div>
 
     <script>
-        // Complete 30-Question Diagnostic Matrix Structure
+        // Cleaned structure with all numeric prefixes removed from metadata and text
         const matrixData = [
             {
                 id: 'resp',
-                title: '1. Responsibility',
+                title: 'Responsibility',
                 questions: [
                     "Are legal, statutory, and operational duties clearly delineated across all stakeholders without overlapping ambiguity?",
                     "Does individuals or teams actively take functional ownership of systemic risks rather than treating them as a pure checklist exercise?",
@@ -101,7 +98,7 @@
             },
             {
                 id: 'info',
-                title: '2. Information Embedding',
+                title: 'Information Embedding',
                 questions: [
                     "Is critical documentation managed via an immutable, transparently structured digital 'golden thread'?",
                     "Can active personnel locate, query, and verify safety-critical design data asynchronously in less than 5 minutes?",
@@ -112,7 +109,7 @@
             },
             {
                 id: 'inc',
-                title: '3. Incentives',
+                title: 'Incentives',
                 questions: [
                     "Do commercial procurement strategies actively reward systemic safety performance over bottom-dollar pricing?",
                     "Are corporate key performance indicators (KPIs) explicitly tied to risk-reduction outcomes instead of production speed?",
@@ -123,7 +120,7 @@
             },
             {
                 id: 'adapt',
-                title: '4. Adaptation',
+                title: 'Adaptation',
                 questions: [
                     "Are safety incident root causes, near-miss insights, and audit metrics systematically written into updated corporate standards?",
                     "How fast does the organization update its operational policies following systemic industry updates or regulatory shifts?",
@@ -134,7 +131,7 @@
             },
             {
                 id: 'comp',
-                title: '5. Competence',
+                title: 'Competence',
                 questions: [
                     "Is there an objective, live capability matrix mapping individual technical skills against assigned project complexity?",
                     "Do key decision-makers demonstrate thorough baseline understanding of regulatory codes (e.g., BSA 2022, CDM 2015)?",
@@ -145,7 +142,7 @@
             },
             {
                 id: 'temp',
-                title: '6. Temporal Alignment',
+                title: 'Temporal Alignment',
                 questions: [
                     "Are design parameters mapped against long-term asset lifecycles rather than short-term quarterly financial constraints?",
                     "Does the organization calculate and manage future risk liabilities that remain latent for years following project delivery?",
@@ -156,7 +153,6 @@
             }
         ];
 
-        // State tracking data store (Default score 3.0 for all 30 questions)
         const userScores = {};
         matrixData.forEach(dim => {
             userScores[dim.id] = Array(dim.questions.length).fill(3.0);
@@ -166,7 +162,6 @@
         const canvas = document.getElementById('imtRadar');
         const ctx = canvas.getContext('2d');
 
-        // Dynamically build the DOM structure for all 30 questions
         function initDOM() {
             matrixData.forEach(dim => {
                 const groupDiv = document.createElement('div');
@@ -186,7 +181,7 @@
                     
                     const textDiv = document.createElement('div');
                     textDiv.className = 'question-text';
-                    textDiv.innerText = `${dim.title.split('.')[0]}.${qIdx + 1} ${qText}`;
+                    textDiv.innerText = qText; // Direct mapping without any index concatenation
                     qCard.appendChild(textDiv);
 
                     const selectRow = document.createElement('div');
@@ -197,17 +192,14 @@
                         btn.className = `btn-score score-btn-${dim.id}-${qIdx}`;
                         btn.type = 'button';
                         btn.innerText = s.toFixed(0);
-                        if (s === 3) btn.classList.add('active'); // set baseline state visual
+                        if (s === 3) btn.classList.add('active');
                         
                         btn.addEventListener('click', () => {
-                            // Update dynamic state arrays
                             userScores[dim.id][qIdx] = parseFloat(s);
                             
-                            // Adjust UI button active classes
                             document.querySelectorAll(`.score-btn-${dim.id}-${qIdx}`).forEach(b => b.classList.remove('active'));
                             btn.classList.add('active');
                             
-                            // Re-calculate and draw values
                             calculateAndRender();
                         });
                         selectRow.appendChild(btn);
@@ -221,12 +213,11 @@
             });
         }
 
-        // Analytical Engine & Radar Rendering Loop
         function calculateAndRender() {
             ctx.clearRect(0, 0, 400, 400);
             const cx = 200, cy = 200, maxRadius = 140;
             
-            // 1. Draw web level lines (1 to 5)
+            // 1. Web levels
             ctx.strokeStyle = '#e0e0e0';
             ctx.lineWidth = 1;
             for (let level = 1; level <= 5; level++) {
@@ -240,7 +231,7 @@
                 ctx.stroke();
             }
 
-            // 2. Draw dimension axis grid lines and typography
+            // 2. Axes and Labels
             ctx.strokeStyle = '#000000';
             ctx.fillStyle = '#000000';
             ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
@@ -259,31 +250,29 @@
                 if (i === 0) ty -= 5;
                 if (i === 3) ty += 12;
                 
-                const shortLabel = dim.title.split(' ')[1].toUpperCase();
+                // Keep label split or clean for visual chart geometry spacing
+                const shortLabel = dim.title.toUpperCase();
                 ctx.fillText(shortLabel, tx, ty);
             });
 
-            // 3. Compute rolling averages for each dimension axis block
+            // 3. Score Calculations
             let totalIndexSum = 0;
             let lowestScore = 6.0;
             let primaryBottleneck = '';
             const currentPolygonPoints = [];
 
             matrixData.forEach((dim, i) => {
-                // Arithmetic mean of the 5 sub-questions
                 const qArray = userScores[dim.id];
                 const dimAverage = qArray.reduce((a, b) => a + b, 0) / qArray.length;
                 
-                // Update specific inline component badge
                 document.getElementById(`roll-${dim.id}`).innerText = dimAverage.toFixed(1);
                 
                 totalIndexSum += dimAverage;
                 if (dimAverage < lowestScore) {
                     lowestScore = dimAverage;
-                    primaryBottleneck = dim.title.substring(3);
+                    primaryBottleneck = dim.title;
                 }
 
-                // Chart geometry translation
                 const angle = (i * Math.PI / 3) - Math.PI / 2;
                 const activeRadius = (maxRadius / 5) * dimAverage;
                 currentPolygonPoints.push({
@@ -292,7 +281,7 @@
                 });
             });
 
-            // 4. Plot profile canvas polygon overlay
+            // 4. Draw polygon
             ctx.beginPath();
             currentPolygonPoints.forEach((pt, i) => {
                 if (i === 0) ctx.moveTo(pt.x, pt.y);
@@ -304,7 +293,7 @@
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // 5. Dynamic Summary Block Output Upgrades
+            // 5. Output text blocks
             const globalIndex = (totalIndexSum / 6).toFixed(1);
             document.getElementById('indexValue').innerText = globalIndex;
             
@@ -312,7 +301,6 @@
                 `Primary systemic bottleneck identified within <span class="bottleneck-highlight">${primaryBottleneck}</span> (${lowestScore.toFixed(1)}). Structural interventions should prioritize this axis to unlock maturity scaling.`;
         }
 
-        // Initialization runtime executions
         initDOM();
         calculateAndRender();
     </script>
