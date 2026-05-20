@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;JETPAC // IMT DIAGNOSTIC&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--bg: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--fg: #000000;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--border: #000000;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--muted: #666666;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--accent-tint: rgba(0, 0, 0, 0.08);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, monospace;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>* { box-sizing: border-box; margin: 0; padding: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; padding: 40px 20px; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.wrapper { max-width: 1100px; margin: 0 auto; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>header { border-bottom: 3px solid var(--border); padding-bottom: 20px; margin-bottom: 40px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.brand { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; tracking: 0.1em; text-transform: uppercase; margin-bottom: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em; text-transform: uppercase; line-height: 1.1; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.layout { display: grid; grid-template-columns: 1fr; gap: 40px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@media (min-width: 850px) { .layout { grid-template-columns: 1.2fr 0.8fr; } }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pane-inputs { display: flex; flex-direction: column; gap: 24px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.dimension-card { border: 1px solid var(--border); padding: 20px; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.dim-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.dim-title { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.dim-score { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; background: var(--fg); color: var(--bg); padding: 2px 6px; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>input[type="range"] { -webkit-appearance: none; width: 100%; background: #e0e0e0; height: 2px; outline: none; margin: 15px 0; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--fg); cursor: pointer; border-radius: 0; border: none; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pane-visual { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 24px; height: fit-content; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-box { border: 1px solid var(--border); padding: 30px; display: flex; justify-content: center; align-items: center; background: var(--bg); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>canvas { max-width: 100%; height: auto; display: block; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.summary-box { border: 3px solid var(--border); padding: 24px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.metric-label { font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 4px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.metric-value { font-size: 4rem; font-weight: 900; letter-spacing: -0.05em; line-height: 1; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.bottleneck-box { margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border); font-size: 0.9rem; line-height: 1.4; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.bottleneck-highlight { font-weight: 700; text-transform: uppercase; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="wrapper"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;header&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="brand"&gt;JETPAC // SYSTEMS &amp; GOVERNANCE RESEARCH&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1&gt;Institutional Maturity Index&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/header&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="layout"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section class="pane-inputs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="dimension-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="dim-header"&gt;&lt;span class="dim-title"&gt;1. Responsibility&lt;/span&gt;&lt;span class="dim-score" id="score-resp"&gt;3.0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="range" id="resp" min="1" max="5" step="0.5" value="3.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="dimension-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="dim-header"&gt;&lt;span class="dim-title"&gt;2. Information Embedding&lt;/span&gt;&lt;span class="dim-score" id="score-info"&gt;3.0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="range" id="info" min="1" max="5" step="0.5" value="3.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="dimension-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="dim-header"&gt;&lt;span class="dim-title"&gt;3. Incentives&lt;/span&gt;&lt;span class="dim-score" id="score-inc"&gt;3.0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="range" id="inc" min="1" max="5" step="0.5" value="3.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="dimension-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="dim-header"&gt;&lt;span class="dim-title"&gt;4. Adaptation&lt;/span&gt;&lt;span class="dim-score" id="score-adapt"&gt;3.0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="range" id="adapt" min="1" max="5" step="0.5" value="3.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="dimension-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="dim-header"&gt;&lt;span class="dim-title"&gt;5. Competence&lt;/span&gt;&lt;span class="dim-score" id="score-comp"&gt;3.0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="range" id="comp" min="1" max="5" step="0.5" value="3.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="dimension-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="dim-header"&gt;&lt;span class="dim-title"&gt;6. Temporal Alignment&lt;/span&gt;&lt;span class="dim-score" id="score-temp"&gt;3.0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="range" id="temp" min="1" max="5" step="0.5" value="3.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;aside class="pane-visual"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="chart-box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;canvas id="imtRadar" width="400" height="400"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="summary-box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="metric-label"&gt;Systemic Maturity Index&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="metric-value" id="indexValue"&gt;3.0&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bottleneck-box" id="bottleneckOutput"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>Adjust sliders to evaluate the organizational landscape.</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/aside&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const canvas = document.getElementById('imtRadar');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ctx = canvas.getContext('2d');</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const dimensions = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'resp', label: 'Responsibility' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'info', label: 'Information' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'inc', label: 'Incentives' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'adapt', label: 'Adaptation' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'comp', label: 'Competence' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'temp', label: 'Temporal' }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function render() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.clearRect(0, 0, 400, 400);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const cx = 200, cy = 200, maxRadius = 140;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 1. Draw web grid lines (Levels 1 to 5)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.strokeStyle = '#e0e0e0';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.lineWidth = 1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (let level = 1; level &lt;= 5; level++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const r = (maxRadius / 5) * level;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>for (let i = 0; i &lt; 6; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const angle = (i * Math.PI / 3) - Math.PI / 2;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>ctx.lineTo(cx + r * Math.cos(angle), cy + r * Math.sin(angle));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.closePath();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.stroke();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 2. Draw axis lines and typography labels</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.strokeStyle = '#000000';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fillStyle = '#000000';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.textAlign = 'center';</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>dimensions.forEach((dim, i) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const angle = (i * Math.PI / 3) - Math.PI / 2;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Axis line</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.moveTo(cx, cy);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.lineTo(cx + maxRadius * Math.cos(angle), cy + maxRadius * Math.sin(angle));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.stroke();</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Text positioning offset adjustments</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const textDist = maxRadius + 20;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let tx = cx + textDist * Math.cos(angle);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let ty = cy + textDist * Math.sin(angle);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (i === 0) ty -= 5;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (i === 3) ty += 12;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fillText(dim.label.toUpperCase(), tx, ty);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 3. Read input scores, calculate index, identify primary bottleneck</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let totalScore = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let lowestScore = 6;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let lowestDim = '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const currentPoints = [];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>dimensions.forEach((dim, i) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const val = parseFloat(document.getElementById(dim.id).value);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById(`score-${dim.id}`).innerText = val.toFixed(1);</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>totalScore += val;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (val &lt; lowestScore) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>lowestScore = val;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>lowestDim = dim.label;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const angle = (i * Math.PI / 3) - Math.PI / 2;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const currentRadius = (maxRadius / 5) * val;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>currentPoints.push({</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>x: cx + currentRadius * Math.cos(angle),</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>y: cy + currentRadius * Math.sin(angle)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 4. Plot profile polygon</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentPoints.forEach((pt, i) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (i === 0) ctx.moveTo(pt.x, pt.y);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>else ctx.lineTo(pt.x, pt.y);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.closePath();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fill();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.lineWidth = 2;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.stroke();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 5. Update summary elements</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const finalIndex = (totalScore / 6).toFixed(1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('indexValue').innerText = finalIndex;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('bottleneckOutput').innerHTML =<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>`Primary systemic bottleneck identified within &lt;span class="bottleneck-highlight"&gt;${lowestDim}&lt;/span&gt; (${lowestScore.toFixed(1)}). Structural interventions should prioritize this axis to unlock maturity scaling.`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>dimensions.forEach(dim =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById(dim.id).addEventListener('input', render);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>render();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
